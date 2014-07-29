@@ -42,14 +42,19 @@ $(document).ready(function(){
     window.SubclassDanceParty = {
       danceFloors: ["HardParty.jpg", "ChillHill.png"],
       floor: 0,
-      lineUp: false
+      lineUp: false,
+      muted: false
     };
     SubclassDanceParty.background = $("body");
     SubclassDanceParty.background.css('background-image', 'url(./images/' + SubclassDanceParty.danceFloors[0]+')');
 
   }
 
-  var changeBackground = function(floor){
+  // set up audio
+  var audioSoft = document.getElementById('audioSoft');
+  var audioHard = document.getElementById('audioHard');
+
+  SubclassDanceParty.changeBackground = function(floor){
     SubclassDanceParty.background.css('background-image', 'url(./images/' + SubclassDanceParty.danceFloors[floor]+')');
   }
 
@@ -60,11 +65,45 @@ $(document).ready(function(){
     if (SubclassDanceParty.floor >= floors){
       SubclassDanceParty.floor = 0;
     }
-    changeBackground(SubclassDanceParty.floor);
+    SubclassDanceParty.changeBackground(SubclassDanceParty.floor);
+   // console.log(SubclassDanceParty.danceFloors[ SubclassDanceParty.floor ] === "ChillHill.png");
+    if( SubclassDanceParty.danceFloors[ SubclassDanceParty.floor ] === "ChillHill.png" ){
+      audioHard.pause();
+      audioSoft.play();
+    } else if(SubclassDanceParty.danceFloors[ SubclassDanceParty.floor ] === "HardParty.jpg"){
+      audioSoft.pause();
+      audioHard.play();
+    }
   });
 
-  $('.lineUpLeft').on('click', function(){
+  $('.lineUp').on('click', function(){
     SubclassDanceParty.lineUp = true;
+    if ($(this).text() === "Toggle Line up"){
+      SubclassDanceParty.lineUp = true;
+      $(this).text("Free Roam");
+    } else {
+      SubclassDanceParty.lineUp = false;
+      $(this).text( "Toggle Line up");
+    }
   });
+
+  $('.muteToggle').on('click', function(){
+    if ($(this).text() === "mute"){
+      $(this).text("unmute");
+    } else {
+      $(this).text("mute");
+    }
+
+    if (SubclassDanceParty.muted) {
+      SubclassDanceParty.muted = false;
+      audioHard.muted = false;
+      audioSoft.muted = false;
+    } else {
+      SubclassDanceParty.muted = true;
+      audioHard.muted = true;
+      audioSoft.muted = true;
+    }
+  });
+
 });
 
