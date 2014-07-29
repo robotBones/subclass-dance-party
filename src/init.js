@@ -28,6 +28,11 @@ $(document).ready(function(){
     );
     $('body').append(dancer.$node);
     window.dancers.push(dancer);
+
+    // sorting to make collision detection easier;
+    window.dancers.sort(function(a,b){
+      return a._left - b._left;
+    });
   });
 
   /////////////////////my code here///////////////////////
