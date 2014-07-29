@@ -21,13 +21,45 @@ $(document).ready(function(){
     var dancerMakerFunction = window[dancerMakerFunctionName];
 
     // make a dancer with a random position
-
-    var dancer = dancerMakerFunction(
+    var dancer = new dancerMakerFunction(
       $("body").height() * Math.random(),
       $("body").width() * Math.random(),
       Math.random() * 1000
     );
     $('body').append(dancer.$node);
+    window.dancers.push(dancer);
+  });
+
+  /////////////////////my code here///////////////////////
+
+  // setting app nameSpace that stores background images and state
+  if (window.SubclassDanceParty === undefined) {
+    window.SubclassDanceParty = {
+      danceFloors: ["HardParty.jpg", "ChillHill.png"],
+      floor: 0,
+      lineUp: false
+    };
+    SubclassDanceParty.background = $("body");
+    SubclassDanceParty.background.css('background-image', 'url(./images/' + SubclassDanceParty.danceFloors[0]+')');
+
+  }
+
+  var changeBackground = function(floor){
+    SubclassDanceParty.background.css('background-image', 'url(./images/' + SubclassDanceParty.danceFloors[floor]+')');
+  }
+
+  $('.changeBackground').on('click', function(){
+    var floors = SubclassDanceParty.danceFloors.length;
+    SubclassDanceParty.floor++;
+
+    if (SubclassDanceParty.floor >= floors){
+      SubclassDanceParty.floor = 0;
+    }
+    changeBackground(SubclassDanceParty.floor);
+  });
+
+  $('.lineUpLeft').on('click', function(){
+    SubclassDanceParty.lineUp = true;
   });
 });
 
