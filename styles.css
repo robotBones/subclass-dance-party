@@ -26,9 +26,3 @@ body, a:link, a:visited, a:active{
   border-radius:10px;
   position:absolute;
 }
-.menuOptions {
-  float: left;
-  text-align: center;
-  padding:5px 12px;
-
-}
